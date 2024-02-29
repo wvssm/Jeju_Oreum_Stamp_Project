@@ -41,8 +41,8 @@ GPS 기능을 통해, 현재 내 주변의 오름을 파악해보세요!
 <br>
 
 # 버전 정보
-- 올라갈지도 0.1 - update: 2024.02.23
 - 올라갈지도 1.0 - update: 2024.03.01
+- 올라갈지도 1.1 - update: ?
 <br><br>
 
 # 참가 및 역할 분담
@@ -50,7 +50,7 @@ GPS 기능을 통해, 현재 내 주변의 오름을 파악해보세요!
 |:---:|:---:|:---:|:---:|
 |<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/mymap/static/images/profile-img-kang.jpg?raw=true"  width="200" height="200"/>|<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/mymap/static/images/profile-img-jung.jpg?raw=true"  width="200" height="200"/>|<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/mymap/static/images/profile-img-sim.jpg?raw=true"  width="200" height="200"/>|<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/mymap/static/images/profile-img-lee.jpg?raw=true"  width="200" height="200"/>|
 |Backend<br>비를 뚫고온 구세주☔|기획, Frontend<br>오름 정복중인 오름 러버😍<br>|Frontend<br>재주많은 덕후🤓|기획, PPT<br> 분위기메이커(저세상 텐션)🥳| 
-<br><br>
+
 
 # 트러블 슈팅
 노션에 기록해두었습니다.
