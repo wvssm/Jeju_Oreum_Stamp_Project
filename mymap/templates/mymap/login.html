@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">    
+</head>
+<body>
+    <section class="login-form">
+        <h1>
+            닉네임을 입력해주세요
+        </h1>
+
+        <form method="post" action="{% url 'map:map' %}" autocomplete="off">
+            {%csrf_token%}
+            <div class="int-area">
+                <input type="text" name="id" id="id" required>
+                <label for="id">닉네임</label>
+                
+            </div>
+
+            <!-- <div class="int-area">
+                <input type="password" name="password" id="password" required>
+                <label for="password">패스워드</label>
+            </div> -->
+
+            <div class="btn-area">
+                <button type="submit" id="btn">시작하기</button>
+            </div>
+        </form>
+
+        <!-- <div class="caption">
+            <a href="forgot_password.html">비밀번호 찾기</a>
+        </div> -->
+        
+    </section>
+
+    <script>
+        const id = document.querySelector("#id");
+        const password = document.querySelector("#password");
+        const btn = document.querySelector("#btn");
+
+        function from_checking() {
+            if (id.value =="") {
+                alert('닉네임을 입력바랍니다.');
+                id.focus();
+                return false;
+            }
+
+
+            // if (password.value =="") {
+            //     alert('비밀번호를 입력바랍니다.');
+            //     password.focus();
+            //     return false;
+            // }
+        }
+
+        btn.addEventListener("click", from_checking);
+    </script>
+</body>
+</html>

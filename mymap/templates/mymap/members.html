@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>올라갈지도</title>
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <header>
+        <h1>올라갈지도</h1>
+        <nav class="nav-list">
+            <ul>
+                <li><a href="http://localhost:8000/mymap/" style="text-decoration: none; color: inherit;">MAIN</a></li>
+                <li><a href="/mymap/members" style="text-decoration: none; color: inherit;">MEMBERS</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="members">
+            <h2>저희와 함께 오름, 올라갈지도?</h2>
+            <p>우리들을 소개할게요.</p>
+            <ul class="member-list">
+                <li class="profile-img">
+                    <img src="/static/images/profile-img-kang.jpg" alt="강수민 프로필 이미지">
+                    <p>강수민</p>
+                    <ul>
+                        <li>이메일 : neoramiregi@gmail.com</li>
+                        <li>특징 : 비를 뚫고 온 구세주</li>
+                        <li>역할 : 개발(Front, Back)</li>
+                    </ul>
+                </li>
+                <li class="profile-img">
+                    <img src="/static/images/profile-img-sim.jpg" alt="심혜민 프로필 이미지">
+                    <p>심혜민</p>
+                    <ul>
+                        <li>이메일 : mongjoo0511@gmail.com</li>
+                        <li>특징 : 재주많은 덕후</li>
+                        <li>역할 : 화면구성(HTML,CSS)</li>
+                    </ul>
+                </li>
+                <li class="profile-img">
+                    <img src="/static/images/profile-img-lee.jpg" alt="이은진 프로필 이미지">
+                    <p>이은진</p>
+                    <ul>
+                        <li>이메일 : icecreamjwan@gmail.com</li>
+                        <li>특징 : 분위기메이커 (저세상 텐션)</li>
+                        <li>역할 : 기획 / PPT / 발표</li>
+                    </ul>
+                </li>
+                <li class="profile-img">
+                    <img src="/static/images/profile-img-jung.jpg" alt="정혜영 프로필 이미지">
+                    <p>정혜영</p>
+                    <ul>
+                        <li>이메일 : hyhy425@gmail.com</li>
+                        <li>특징 : 오름 정복중인 오름 러버</li>
+                        <li>역할 : 기획 / 화면구성(HTML,CSS)</li>
+                    </ul>
+                </li>
+            </ul>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Copyright 2024. &copy; 올라갈지도 all rights reserved.</p>
+        <p>JEJU CODING BASECAMP</p>
+    </footer>
+</body>
+</html>

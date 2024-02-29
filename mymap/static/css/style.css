@@ -1,0 +1,193 @@
+/* 폰트 */
+@font-face {
+    font-family: 'NEXON Lv1 Gothic OTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+} 
+
+
+/* 전체 적용 CSS */
+* {
+    box-sizing: border-box; /* 요소의 width에 여백을 포함 */
+}
+
+html {
+    scroll-behavior: smooth; /* 부드러운 스크롤 */
+    overflow-x: hidden;
+    font-size: 10px;
+}
+
+body {
+    /* font-size: 1.6rem; */
+    font-family: "NEXON Lv1 Gothic OTF"; /* 전체 프로젝트에서 사용할 폰트 설정 */
+}
+
+
+/* 헤더 */
+header {
+    width: 100%;
+    height: 80px;
+    padding: 0 40px;
+    background-color: #FF7A25;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+
+header h1 {
+    font-size: 30px;
+    color: white;
+    font-weight: 900;
+}
+
+.nav-list {
+    display: flex;
+    font-size: 16px;
+    gap: 60px;
+    color: white;
+    text-decoration: none;
+    align-items: row;
+
+}
+
+.nav-list ul {
+    display: flex;
+    gap: 20px;
+}
+
+
+/* 풋터 */
+
+footer {
+    background-color: #254328;
+    color: whitesmoke;
+    font-size: 10px;
+    height: 200px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 메인 */
+/* 바디 */
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1000px;
+    gap: 40px;
+    margin: 0 auto;
+}
+
+main section h2, h3, p {
+    text-align: center;
+    text-overflow: ellipsis;
+}
+
+main section h2 {
+    font-size: 1.6em;
+    font-weight: 900;
+}
+
+main section h3 {
+    font-size: 1.4em;
+    font-weight: 900;
+}
+
+main section p {
+    line-height: 150%;
+}
+
+main section {
+    /* height: 100vh; */
+    padding: 20px 40px 20px 40px;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width:100%;
+}
+
+/* 지도 */
+#map h2 {
+    margin-top: 100px;
+}
+
+.map-img {
+    height: 600px;
+    width: 100%;
+    background-color: gray;
+}
+
+.stamp-button {
+    width: auto; /*200px*/
+    height: 40px;
+    color: #ffffff;
+    border-radius: 10px;
+    transition: all 0.2s ;
+    background: #FF982C;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+/* 스탬프 */
+.stamp-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    gap: 20px;
+}
+
+.stamp-list img {
+    width: 120px;
+}
+
+/* 멤버스 */
+
+/* 바디 */
+#members h2 {
+    margin-top: 100px;
+}
+
+.member-list {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    gap: 40px
+}
+
+.profile-img li {
+    font-size: 14px;
+    width:160px;
+    line-height: 120%;
+    margin-top: 5px;
+}
+
+.profile-img img {
+    width: 100%;
+    height: 160px;
+    border-radius: 20px;
+    box-shadow: 4px 4px 4px 0 rgba(0,0,0,0.2);
+}
+
+.name-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    gap: 40px;
+}

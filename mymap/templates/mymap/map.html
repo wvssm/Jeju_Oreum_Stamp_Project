@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>올라갈지도</title>
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="/static/js/config.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <header>
+        <h1>올라갈지도</h1>
+        <nav class="nav-list">
+            <ul>
+                <li><a href="/mymap" style="text-decoration: none; color: inherit;">MAIN</a></li>
+                <li><a href="/mymap/members" style="text-decoration: none; color: inherit;">MEMBERS</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="map">
+            <h2><strong>{{nick_name}}님, 오름 스탬프</strong>를 찍어보세요!</h2>
+            <p>근처에 있는 오름만 체크할 수 있어요.</p>
+            <div id="real_map" style="width:100%;height:500px;"></div>
+            <h3 id="oname"><strong>오름이름</strong></h3>
+            <p id="ocontent">오름에 대한 내용이 들어갑니다.</p>
+            <p id="obutton"></p>
+        </section>
+
+        <section id="stamp">
+            <h2>내가 다녀온 오름이에요.</h3>
+            <p id="num">0개의 오름을 다녀오셨군요!</p>
+            <ul class="stamp-list">
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>Copyright 2024. &copy; 올라갈지도 all rights reserved.</p>
+        <p>JEJU CODING BASECAMP</p>
+    </footer>
+    <!-- 스크립트 코드 (동작) -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{MAP_API_KEY}}&libraries=services"></script>
+    <script>
+    console.log()
+    var mylet = 0;
+    var mylot = 0;
+    var num = 0;
+
+    var check = {
+        도두봉 : 0,
+        서우봉 : 0,
+        수월봉 : 0,
+        금오름 : 0,
+        새별오름 : 0,
+        산굼부리 : 0,
+        거문오름 : 0,
+        안돌오름 : 0,
+        아부오름 : 0,
+        백약이오름 : 0,
+        다랑쉬오름 : 0,
+        용눈이오름 : 0,
+        물영아리 : 0,
+        따라비오름 : 0,
+    }
+
+    const pic = {
+        도두봉 : 'https://t1.kakaocdn.net/jewika/images/v1/05_03.png',
+        서우봉 : 'https://mblogthumb-phinf.pstatic.net/MjAxOTA4MDhfMzUg/MDAxNTY1MjM4MzM4NzI0.WeRWZTMkn6MJuJtr_I9EWKDmrUgQ0_mWsGxb3rXEopYg.D9Tk3__qDx2HfHcwan0ZoSwGQa7hG7GUbec5YG-p6JMg.JPEG.wowjejusi/1_%EC%83%81%EB%8B%A8_%EB%8C%80%ED%91%9C%EC%82%AC%EC%A7%84.jpg?type=w800',
+        수월봉 : 'https://api.cdn.visitjeju.net/photomng/imgpath/202111/03/53190c82-4ef7-4950-951d-aa591ae17b73.jpg',
+        금오름 : 'https://d2ur7st6jjikze.cloudfront.net/offer_photos/99683/541693_large_1602562112.jpg?1602562112',
+        새별오름 : 'data:image/jpeg;base64,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',
+        군산 : 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMjdfMTIy/MDAxNjA5MDU5MTkwNzEz.2ycpM_ebNGVSCHyleETkmakdbRUREvQbUdGkNDoY-iwg.8VZWcqz4FNx6LsZtGVa6hIJrKGaFZ7tUgIvUyJzjQFog.JPEG.suntill0210/DSC_9380-HDR.jpg?type=w800',
+        산굼부리 : 'https://www.headlinejeju.co.kr/news/photo/201407/216915_114618_3414.jpg',
+        거문오름 : 'https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/75e5bd68-97f9-471d-be28-88ecda738b30.jpg',
+        안돌오름 : 'https://api.cdn.visitjeju.net/photomng/imgpath/202111/25/bf3c23ac-5ecf-47b5-a68f-f6dda28b0967.JPG',
+        아부오름 : 'https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/729e9473-9590-4923-aec0-e72a3fe7d18d.jpg',
+        백약이오름 : 'https://api.cdn.visitjeju.net/photomng/imgpath/202110/29/37af9267-e9ce-4f31-999a-845b81eea9c3.png',
+        다랑쉬오름 : 'data:image/jpeg;base64,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',
+        용눈이오름 : 'https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202307/27/ef114ddd-c10d-4717-95fa-419902728bb5.jpg',
+        물영아리 : 'https://file.mk.co.kr/meet/yonhap/2019/07/21/image_readtop_2019_547356_0_161121.jpg',
+        따라비오름 : 'https://t1.daumcdn.net/cfile/tistory/997AE8335A06834F03'
+    }
+
+    const ment = {
+        도두봉 : '공항 근처에 있는 오름. 바다와 시내권을 한 눈에 볼 수 있어요. 날아가는 비행기는 덤!',
+        서우봉 : '푸른 바다와 예쁜 유채꽃밭이 어우러진 멋진 풍경이 있는 곳.',
+        수월봉 : '차귀도로 떨어지는 낙조와 지질학의 교과서를 만나볼 수 있어요. 천연기념물 제513호이자 올레12코스에요.',
+        금오름 : '패러글라이딩 풍경을 감상할 수 있는 분화구가 멋진 오름. 환상적인 일몰을 감상할 수 있어요.',
+        새별오름 : '제주 서부 애월에 위치해 있으며 억새가 아름다운 오름',
+        군산 : '황홀한 저녁 노을을 바라보며, 패러글라이딩을 즐길 수 있는 곳. 올레8코스에 있어요.',
+        산굼부리 : '국가지정 문화재 천연기념물 263호로, 사계절마다 다른풍경의 분화구 식물원이에요. ',
+        거문오름 : '대한민국 유일의 세계자연유산!',
+        안돌오름 : '송당에 위치한 오름. 밧돌오름과 죽마고우에요!',
+        아부오름 : '제주의 오름을 좀 더 가깝게 느낄 수 있어요.',
+        백약이오름 : '하늘로 향하는 길. 약초가 많아 백약이 오름이라고 불리었어요.',
+        다랑쉬오름 : '4계절 색채가 뚜렷한 오름의 여왕!',
+        용눈이오름 : '능선의 아름다움을 뽐내는, 김영갑 작가가 사랑한 오름이에요.',
+        물영아리 : '영아리는 신령스런 산이란 뜻이에요. 분화구에 물이 고인 습지를 품고 있어요.',
+        따라비오름 : '3개의 분화구와 6개의 봉우리로 이루어져 있어요. 억새가 참 멋진 오름이에요.',
+    }
+
+    // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+    var infowindow = new kakao.maps.InfoWindow({content:'<section id="box"><img src="https://mblogthumb-phinf.pstatic.net/MjAyMDA3MTRfNjEg/MDAxNTk0NzMwODMwNDQz.98uPs5FXv7Zhr3wW-e2eHAw0MlKNnXRZUH09V0nKUQkg.7n2aCbLAXmU9-ZgOc86zn3jbX55Zf4112dJIYbCD5D4g.JPEG.dokieye/0-%EC%84%9C%EA%B7%80%ED%8F%AC%EC%B9%98%EC%9C%A0%EC%9D%98%EC%88%B2-33.jpg?type=w800" width=150/><div>시오름</div></section>'});
+
+    var mapContainer = document.getElementById('real_map'), // 지도를 표시할 div 
+        mapOption = {
+            center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };  
+
+    // 지도를 생성합니다    
+    var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+    var imageSrc = 'https://cdn-icons-png.flaticon.com/256/8696/8696419.png'; // 마커이미지의 주소입니다  
+    var imageSrc2 = 'https://cdn-icons-png.flaticon.com/256/13982/13982693.png '; // 마커이미지 사람의 주소입니다 
+    var imageSrc3 = 'https://cdn-icons-png.flaticon.com/256/753/753344.png'; // 마커이미지 체크의 주소입니다 
+    var imageSize = new kakao.maps.Size(27, 27); // 마커이미지의 크기입니다
+    var imageSize_big = new kakao.maps.Size(33, 33); // 체크이미지의 크기입니다
+    var imageSize_toobig = new kakao.maps.Size(42, 42); // 체크이미지의 크기입니다
+    var imageOption = {offset: new kakao.maps.Point(0, 0)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+        
+    // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+    var person_markerImage = new kakao.maps.MarkerImage(imageSrc2, imageSize_toobig, imageOption);
+    var check_markerImage = new kakao.maps.MarkerImage(imageSrc3, imageSize_big, imageOption);
+
+    // 장소 검색 객체를 생성합니다
+    var ps = new kakao.maps.services.Places(); 
+
+    // 키워드로 장소를 검색합니다
+    ps.keywordSearch('오름', placesSearchCB); 
+
+    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+    if (navigator.geolocation) {
+        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+        navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude, // 위도
+        lon = position.coords.longitude; // 경도
+        mylet = position.coords.latitude;
+        mylot = position.coords.longitude;
+        console.log('성공'+lat,lon);
+        ps.keywordSearch('오름', placesSearchCB); 
+        });
+        
+    } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+        alert("geolocation을 사용할수 없어요..'🥲 \n" );
+    }
+
+    // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+    function placesSearchCB (data, status, pagination) {
+        if (status === kakao.maps.services.Status.OK) {
+
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+            // LatLngBounds 객체에 좌표를 추가합니다
+            var bounds = new kakao.maps.LatLngBounds();
+
+            for (var i=0; i<data.length; i++) {
+                displayMarker(data[i]);    
+                bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+            }       
+
+            // 마커를 생성하고 지도에 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(mylet, mylot), 
+            image: person_markerImage
+        });
+
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="text-align: center; margin:5px">현재 위치🍊</div>' // 인포윈도우에 표시할 내용
+        });
+
+        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+            map.setBounds(bounds);
+        } 
+    }
+
+    // 지도에 마커를 표시하는 함수입니다
+    function displayMarker(place) {
+
+    // 마커를 생성하고 지도에 표시합니다
+    var marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(place.y, place.x), 
+        image: check[place.place_name] == 1 ? check_markerImage : markerImage
+    });
+
+    var infowindow = new kakao.maps.InfoWindow({
+            content: '<div><img src='+pic[place.place_name]+' width=150/><div style="text-align: center; margin: 5px">'+place.place_name+'</div></div>' // 인포윈도우에 표시할 내용
+        });
+
+        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+
+    // 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, 'click', function() {
+        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+        console.log(marker);
+        console.log(place.y, place.x)
+        var diff_let = mylet - place.y;
+        var diff_lot = mylet - place.x;
+        console.log(mylet - place.y, mylot - place.x)
+        //if(mylot - place.x > 0.2 || mylot - place.x < -0.2 ){
+        if(0){
+            alert("현재 위치에서 스탬프를 찍을 수 없습니다.🥲 \n" );
+            document.getElementById('oname').innerHTML = '<strong>'+place.place_name+'</strong>';
+            document.getElementById('ocontent').innerHTML = ment[place.place_name];
+            document.getElementById('obutton').innerHTML = '<button type="button" class="stamp-button"><a href = "'+place.place_url+'" style="text-decoration:none; color:#ffffff;">📍' +place.place_name+' 위치 정보로 이동<a/></button>';
+        }
+        else{
+            alert("스탬프를 찍었습니다.⛰️")
+            console.log(place.address_name);
+            
+            var today = new Date();
+
+            var year = today.getFullYear();
+            var month = ('0' + (today.getMonth() + 1)).slice(-2);
+            var day = ('0' + today.getDate()).slice(-2);
+
+            var dateString = year + '-' + month  + '-' + day;
+
+            // 마커 이미지 변화
+            check[place.place_name] = 1;
+            
+            // 초기화
+            ps.keywordSearch('오름', placesSearchCB);
+
+            // 정보 넣기
+            console.log(place);
+            document.getElementById('oname').innerHTML = '<strong>'+place.place_name+'</strong>';
+            document.getElementById('ocontent').innerHTML = ment[place.place_name];
+            document.getElementById('obutton').innerHTML = '<button type="button" class="stamp-button"><a href = "'+place.place_url+'" style="text-decoration:none; color:#ffffff;">📍' +place.place_name+' 위치 정보로 이동<a/></button>';
+            num = num + 1;
+            document.getElementById("num").innerText = num+'개의 오름을 다녀오셨군요!';
+            // 스탬프 찍기
+            document.querySelector(".stamp-list").innerHTML += '<li class="stamp-img"><img src="/static/images/stamp.png" alt="오름 스탬프"></li>';
+        }
+    });
+    }
+
+    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+    function makeOverListener(map, marker, infowindow) {
+        return function() {
+        infowindow.open(map, marker);
+        };
+    }
+
+    // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+    function makeOutListener(infowindow) {
+        return function() {
+        infowindow.close();
+        };
+    }
+    </script>
+</body>
+</html>
