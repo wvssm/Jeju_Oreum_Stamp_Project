@@ -1,7 +1,9 @@
 <div align = center>
 
 # 올라갈지도
-GPS 기반의 오름 방문 기록 사이트 <br><br>
+GPS 기반의 오름 방문 기록 사이트 
+https://github.com/wvssm/Jeju_Oreum_Stamp_Project/assets/52875244/8276e9e3-3bf1-4d68-846c-616426231808
+<br><br>
 </div>
 
 # 프로젝트 소개
