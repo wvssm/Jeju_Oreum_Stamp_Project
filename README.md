@@ -5,7 +5,6 @@ GPS 기반의 오름 방문 기록 사이트
 
 https://github.com/wvssm/Jeju_Oreum_Stamp_Project/assets/52875244/26927bb8-4735-4557-bc32-1067d9f21650
 
-<br><br>
 </div>
 
 # 프로젝트 소개
