@@ -31,8 +31,10 @@ def signup_view(request):
         email = request.POST["email"]
         password = request.POST["password"]
 
-        user = User.objects.create_user(username,email,password)
-        user.save()
-
-        return redirect("users:login")
+        if User.objects.filter(username=username).exists():
+            return redirect("users:signup")
+        else:
+            user = User.objects.create_user(username,email,password)
+            user.save()
+            return redirect("users:login")
     return render(request, "users/signup.html")

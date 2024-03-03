@@ -7,7 +7,6 @@
     <title>올라갈지도</title>
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="/static/js/config.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -32,11 +31,30 @@
             <p id="obutton"></p>
         </section>
 
+        <form action="{%url 'mymap:map'%}" method="post" id ="myHiddenForm">
+            <!--{% csrf_token %}-->
+            <!--<input type="hidden" id="oname" name="oname" value=""/>-->
+        </form>
+
         <section id="stamp">
             <h2>내가 다녀온 오름이에요.</h3>
-            <p id="num">0개의 오름을 다녀오셨군요!</p>
+            <p id="num">{{ stamps|length }}개의 오름을 다녀오셨군요!</p>
+            {% if stamps %}
             <ul class="stamp-list">
+                {% for stamp in stamps %}
+                <div class="info">
+                    <div><li class="stamp-img"><img src="/static/images/stamp.png" alt="오름 스탬프" style="width:50px; height:50px;"></li><div/>
+                    <div><span>오름이름 | </span>{{ stamp.oname }}</div>
+                    <div><span>생성날짜 | </span>{{ stamp.created_at}}</div>
+                    <div><span>작성자 | </span>{{ stamp.author }}</div>
+                </div>
+                </li>
+                {% endfor %}
             </ul>
+            {% else %}
+            <h1 class="not-found-stamp">게시글이 없습니다.</h1>
+            {% endif %}
+            
         </section>
     </main>
 
@@ -243,7 +261,9 @@
             num = num + 1;
             document.getElementById("num").innerText = num+'개의 오름을 다녀오셨군요!';
             // 스탬프 찍기
-            document.querySelector(".stamp-list").innerHTML += '<li class="stamp-img"><img src="/static/images/stamp.png" alt="오름 스탬프"></li>';
+            document.getElementById("myHiddenForm").innerHTML = '{% csrf_token %} <input type="hidden" id="oname" name="oname" value="'+place.place_name+'"/>'
+            document.getElementById("myHiddenForm").submit();
+            console.log('print!');
         }
     });
     }
