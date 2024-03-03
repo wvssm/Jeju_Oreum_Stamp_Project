@@ -95,7 +95,7 @@ body {
 
 }
 
-/* .caption {
+.caption {
     margin-top: 20px;
     text-align: center;
 }
@@ -104,4 +104,4 @@ body {
     font-size: 0.9rem;
     color: var(--basis-font-color);
     text-decoration: none;
-} */
+}

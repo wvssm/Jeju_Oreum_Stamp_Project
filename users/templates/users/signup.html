@@ -4,57 +4,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log In</title>
+    <title>올라갈지도 회원가입</title>
     <link rel="stylesheet" href="{% static 'css/login.css' %}">    
 </head>
 <body>
     <section class="login-form">
         <h1>
-            닉네임을 입력해주세요
+            회원가입
         </h1>
 
-        <form method="post" action="{% url 'map:map' %}" autocomplete="off">
+        <form method="POST" action="">
             {%csrf_token%}
             <div class="int-area">
-                <input type="text" name="id" id="id" required>
-                <label for="id">닉네임</label>
-                
+                <input type="text" name="username" id="username" required>
+                <label for="username">닉네임</label>
             </div>
 
-            <!-- <div class="int-area">
+            <div class="int-area">
+                <input type="email" name="email" id="email" required>
+                <label for="username">이메일</label>
+            </div>
+
+            <div class="int-area">
                 <input type="password" name="password" id="password" required>
                 <label for="password">패스워드</label>
-            </div> -->
+            </div>
 
             <div class="btn-area">
-                <button type="submit" id="btn">시작하기</button>
+                <button type="submit" id="btn">회원가입</button>
             </div>
         </form>
-
-        <!-- <div class="caption">
-            <a href="forgot_password.html">비밀번호 찾기</a>
-        </div> -->
         
     </section>
 
     <script>
-        const id = document.querySelector("#id");
+        const username = document.querySelector("#username");
         const password = document.querySelector("#password");
         const btn = document.querySelector("#btn");
 
         function from_checking() {
-            if (id.value =="") {
+            if (username.value =="") {
                 alert('닉네임을 입력바랍니다.');
-                id.focus();
+                username.focus();
                 return false;
             }
 
 
-            // if (password.value =="") {
-            //     alert('비밀번호를 입력바랍니다.');
-            //     password.focus();
-            //     return false;
-            // }
+            if (password.value =="") {
+                alert('비밀번호를 입력바랍니다.');
+                password.focus();
+                return false;
+            }
         }
 
         btn.addEventListener("click", from_checking);
