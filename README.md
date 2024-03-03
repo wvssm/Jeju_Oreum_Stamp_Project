@@ -52,7 +52,8 @@ GPS 기능을 통해, 현재 내 주변의 오름을 파악해보세요!
 |[강수민](https://github.com/wvssm)|[정혜영](https://github.com/jungdoing)|[심혜민](https://github.com/hyemdol)|[이은진](https://github.com/JinJinJinJIn2)|
 |:---:|:---:|:---:|:---:|
 |<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/mymap/static/images/profile-img-kang.jpg?raw=true"  width="200" height="200"/>|<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/mymap/static/images/profile-img-jung.jpg?raw=true"  width="200" height="200"/>|<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/mymap/static/images/profile-img-sim.jpg?raw=true"  width="200" height="200"/>|<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/mymap/static/images/profile-img-lee.jpg?raw=true"  width="200" height="200"/>|
-|Backend<br>비를 뚫고온 구세주☔|기획, Frontend<br>오름 정복중인 오름 러버😍<br>|Frontend<br>재주많은 덕후🤓|기획, PPT<br> 분위기메이커(저세상 텐션)🥳| 
+|Backend|기획, Frontend|Frontend|기획, PPT|
+|비를 뚫고온 구세주☔|오름 정복중인 오름 러버😍|재주많은 덕후🤓|분위기메이커(저세상 텐션)🥳|
 
 
 # 트러블 슈팅
