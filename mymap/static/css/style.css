@@ -47,6 +47,10 @@ header h1 {
     font-weight: 900;
 }
 
+a {
+    text-decoration: none; 
+    color: inherit;
+}
 .nav-list {
     display: flex;
     font-size: 16px;

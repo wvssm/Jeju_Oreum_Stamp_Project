@@ -14,9 +14,9 @@
         <h1>올라갈지도</h1>
         <nav class="nav-list">
             <ul>
-                <li><a href="/mymap" style="text-decoration: none; color: inherit;">MAIN</a></li>
-                <li><a href="/mymap/members" style="text-decoration: none; color: inherit;">MEMBERS</a></li>
-                <li><a href="{% url 'users:logout' %}" style="text-decoration: none; color: inherit;">LOGOUT</a></li>
+                <li><a href="{% url 'mymap:map' %}">MAIN</a></li>
+                <li><a href="{% url 'mymap:members' %}">MEMBERS</a></li>
+                <li><a href="{% url 'users:logout' %}">LOGOUT</a></li>
             </ul>
         </nav>
     </header>
@@ -32,8 +32,6 @@
         </section>
 
         <form action="{%url 'mymap:map'%}" method="post" id ="myHiddenForm">
-            <!--{% csrf_token %}-->
-            <!--<input type="hidden" id="oname" name="oname" value=""/>-->
         </form>
 
         <section id="stamp">
@@ -62,30 +60,18 @@
         <p>Copyright 2024. &copy; 올라갈지도 all rights reserved.</p>
         <p>JEJU CODING BASECAMP</p>
     </footer>
-    <!-- 스크립트 코드 (동작) -->
+
+
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{MAP_API_KEY}}&libraries=services"></script>
     <script>
-    console.log()
+    let oname = [
+        {% for stamp in stamps %}
+          "{{stamp.oname}}",
+        {% endfor %}
+    ]
     var mylet = 0;
     var mylot = 0;
     var num = 0;
-
-    var check = {
-        도두봉 : 0,
-        서우봉 : 0,
-        수월봉 : 0,
-        금오름 : 0,
-        새별오름 : 0,
-        산굼부리 : 0,
-        거문오름 : 0,
-        안돌오름 : 0,
-        아부오름 : 0,
-        백약이오름 : 0,
-        다랑쉬오름 : 0,
-        용눈이오름 : 0,
-        물영아리 : 0,
-        따라비오름 : 0,
-    }
 
     const pic = {
         도두봉 : 'https://t1.kakaocdn.net/jewika/images/v1/05_03.png',
@@ -135,18 +121,17 @@
     // 지도를 생성합니다    
     var map = new kakao.maps.Map(mapContainer, mapOption); 
 
-    var imageSrc = 'https://cdn-icons-png.flaticon.com/256/8696/8696419.png'; // 마커이미지의 주소입니다  
-    var imageSrc2 = 'https://cdn-icons-png.flaticon.com/256/13982/13982693.png '; // 마커이미지 사람의 주소입니다 
-    var imageSrc3 = 'https://cdn-icons-png.flaticon.com/256/753/753344.png'; // 마커이미지 체크의 주소입니다 
-    var imageSize = new kakao.maps.Size(27, 27); // 마커이미지의 크기입니다
-    var imageSize_big = new kakao.maps.Size(33, 33); // 체크이미지의 크기입니다
-    var imageSize_toobig = new kakao.maps.Size(42, 42); // 체크이미지의 크기입니다
+    var imageMark = '/static/images/oreum_mark.png'; 
+    var imagePersonMark = '/static/images/person_mark.png';  
+    var imageCheckMark = '/static/images/check_mark.png'; 
+    var imageSize = new kakao.maps.Size(27, 27); // 기본 마커의 크기
+    var imageSize_toobig = new kakao.maps.Size(42, 42); // 현재 위치 마커의 크기
     var imageOption = {offset: new kakao.maps.Point(0, 0)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
         
     // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-    var person_markerImage = new kakao.maps.MarkerImage(imageSrc2, imageSize_toobig, imageOption);
-    var check_markerImage = new kakao.maps.MarkerImage(imageSrc3, imageSize_big, imageOption);
+    var markerImage = new kakao.maps.MarkerImage(imageMark, imageSize, imageOption);
+    var person_markerImage = new kakao.maps.MarkerImage(imagePersonMark, imageSize_toobig, imageOption);
+    var check_markerImage = new kakao.maps.MarkerImage(imageCheckMark, imageSize, imageOption);
 
     // 장소 검색 객체를 생성합니다
     var ps = new kakao.maps.services.Places(); 
@@ -183,44 +168,46 @@
                 bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
             }       
 
-            // 마커를 생성하고 지도에 표시합니다
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: new kakao.maps.LatLng(mylet, mylot), 
-            image: person_markerImage
-        });
+            // 현재 위치 마커 표시
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(mylet, mylot), 
+                image: person_markerImage
+            });
 
-        var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="text-align: center; margin:5px">현재 위치🍊</div>' // 인포윈도우에 표시할 내용
-        });
+            var infowindow = new kakao.maps.InfoWindow({
+                content: '<div style="text-align: center; margin:5px">현재 위치🍊</div>' // 인포윈도우에 표시할 내용
+            });
 
-        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+            kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정
             map.setBounds(bounds);
         } 
     }
 
-    // 지도에 마커를 표시하는 함수입니다
+    // 검색결과 마커를 지도 위에 표시하는 함수
     function displayMarker(place) {
 
-    // 마커를 생성하고 지도에 표시합니다
+    // 지도 위에 마커 생성
     var marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x), 
-        image: check[place.place_name] == 1 ? check_markerImage : markerImage
+        image: oname.includes(place.place_name) ? check_markerImage : markerImage
     });
 
+    // 인포 윈도우 정의
     var infowindow = new kakao.maps.InfoWindow({
             content: '<div><img src='+pic[place.place_name]+' width=150/><div style="text-align: center; margin: 5px">'+place.place_name+'</div></div>' // 인포윈도우에 표시할 내용
-        });
+    });
 
-        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+    // 마우스 커서에 따른 인포 윈도우 변화
+    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 
 
-    // 마커에 클릭이벤트를 등록합니다
+    // 마커에 클릭 이벤트
     kakao.maps.event.addListener(marker, 'click', function() {
         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
         console.log(marker);
@@ -237,45 +224,29 @@
         }
         else{
             alert("스탬프를 찍었습니다.⛰️")
-            console.log(place.address_name);
-            
-            var today = new Date();
 
-            var year = today.getFullYear();
-            var month = ('0' + (today.getMonth() + 1)).slice(-2);
-            var day = ('0' + today.getDate()).slice(-2);
-
-            var dateString = year + '-' + month  + '-' + day;
-
-            // 마커 이미지 변화
-            check[place.place_name] = 1;
-            
-            // 초기화
-            ps.keywordSearch('오름', placesSearchCB);
+            // 스탬프 찍기
+            document.getElementById("myHiddenForm").innerHTML = '{% csrf_token %} <input type="hidden" id="oname" name="oname" value="'+place.place_name+'"/>'
+            document.getElementById("myHiddenForm").submit();
+            console.log('print!');
 
             // 정보 넣기
             console.log(place);
             document.getElementById('oname').innerHTML = '<strong>'+place.place_name+'</strong>';
             document.getElementById('ocontent').innerHTML = ment[place.place_name];
             document.getElementById('obutton').innerHTML = '<button type="button" class="stamp-button"><a href = "'+place.place_url+'" style="text-decoration:none; color:#ffffff;">📍' +place.place_name+' 위치 정보로 이동<a/></button>';
-            num = num + 1;
-            document.getElementById("num").innerText = num+'개의 오름을 다녀오셨군요!';
-            // 스탬프 찍기
-            document.getElementById("myHiddenForm").innerHTML = '{% csrf_token %} <input type="hidden" id="oname" name="oname" value="'+place.place_name+'"/>'
-            document.getElementById("myHiddenForm").submit();
-            console.log('print!');
         }
     });
     }
 
-    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+    // 인포윈도우를 표시하는 클로저를 만드는 함수
     function makeOverListener(map, marker, infowindow) {
         return function() {
         infowindow.open(map, marker);
         };
     }
 
-    // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+    // 인포윈도우를 닫는 클로저를 만드는 함수 
     function makeOutListener(infowindow) {
         return function() {
         infowindow.close();
