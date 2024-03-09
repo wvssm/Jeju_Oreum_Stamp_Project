@@ -134,6 +134,10 @@ main section {
     background-color: gray;
 }
 
+#ocontent{
+    font-size: 130%;
+}
+
 .stamp-button {
     width: auto; /*200px*/
     height: 40px;
@@ -153,8 +157,18 @@ main section {
     gap: 20px;
 }
 
+.stamp-img {
+    text-align: center;
+}
+
+.stamp-text{
+    margin-bottom: 5px;
+}
+
 .stamp-list img {
-    width: 120px;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 7px;
 }
 
 /* 멤버스 */

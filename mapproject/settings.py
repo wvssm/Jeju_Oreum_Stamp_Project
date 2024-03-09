@@ -2,6 +2,7 @@ import os
 import json
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
+from django.contrib.messages import constants as messages_constants
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -124,3 +125,8 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "mymap:mymap"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+MESSAGE_LEVEL = messages_constants.DEBUG

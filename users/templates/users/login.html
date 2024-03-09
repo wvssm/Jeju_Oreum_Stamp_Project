@@ -12,7 +12,6 @@
         <h1>
             로그인
         </h1>
-
         <form method="POST" action="">
             {%csrf_token%}
             <div class="int-area">
@@ -38,20 +37,25 @@
     </section>
 
     <script>
+        {% if messages %}
+            {% for message in messages %}
+                alert('{{message.message}}');
+            {% endfor %}
+        {% endif %}
         const username = document.querySelector("#username");
         const password = document.querySelector("#password");
         const btn = document.querySelector("#btn");
 
         function from_checking() {
             if (username.value =="") {
-                alert('닉네임을 입력바랍니다.');
+                alert('닉네임을 입력바랍니다.😶');
                 username.focus();
                 return false;
             }
 
 
             if (password.value =="") {
-                alert('비밀번호를 입력바랍니다.');
+                alert('비밀번호를 입력바랍니다.😶');
                 password.focus();
                 return false;
             }

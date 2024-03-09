@@ -38,6 +38,11 @@
     </section>
 
     <script>
+        {% if messages %}
+            {% for message in messages %}
+                alert('{{message.message}}');
+            {% endfor %}
+        {% endif %}
         const username = document.querySelector("#username");
         const password = document.querySelector("#password");
         const btn = document.querySelector("#btn");

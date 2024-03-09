@@ -26,9 +26,21 @@
             <h2><strong>{{user.username}}님, 오름 스탬프</strong>를 찍어보세요!</h2>
             <p>근처에 있는 오름만 체크할 수 있어요.</p>
             <div id="real_map" style="width:100%;height:500px;"></div>
-            <h3 id="oname"><strong>오름이름</strong></h3>
-            <p id="ocontent">오름에 대한 내용이 들어갑니다.</p>
-            <p id="obutton"></p>
+            {% if stamps %}
+                {% for stamp in stamps %}
+                    {% if forloop.first%}
+                        <h3 id="oname"><strong>{{oreum_data.oname}}</strong></h3>
+                        <p>{{oreum_data.oplace}}</p>
+                        <p>주차장:{{oreum_data.oparking}}, 화장실:{{oreum_data.otoilet}}</p>
+                        <p id="ocontent">{{oreum_data.ocontent}}</p>
+                        <p id="obutton"><button type="button" class="stamp-button"><a href = "{{oreum_data.ourl}}" style="text-decoration:none; color:#ffffff;">📍{{oreum_data.oname}} 정보로 이동<a/></button></p>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <h3 id="oname"><strong>오름이름</strong></h3>
+                <p id="ocontent">오름에 대한 내용이 들어갑니다.</p>
+                <p id="obutton"></p>
+            {% endif %}
         </section>
 
         <form action="{%url 'mymap:map'%}" method="post" id ="myHiddenForm">
@@ -40,17 +52,17 @@
             {% if stamps %}
             <ul class="stamp-list">
                 {% for stamp in stamps %}
+                <li>
                 <div class="info">
-                    <div><li class="stamp-img"><img src="/static/images/stamp.png" alt="오름 스탬프" style="width:50px; height:50px;"></li><div/>
-                    <div><span>오름이름 | </span>{{ stamp.oname }}</div>
-                    <div><span>생성날짜 | </span>{{ stamp.created_at}}</div>
-                    <div><span>작성자 | </span>{{ stamp.author }}</div>
+                    <div class="stamp-img"><img src="/static/images/stamp.png" alt="오름 스탬프"></div>
+                    <div calss="stamp-text" style="font-size:90%; margin-bottom: 5px;">오름이름 : {{ stamp.oname }}</div>
+                    <div calss="stamp-text" style="font-size:90%; margin-bottom: 5px;">방문날짜 : {{ stamp.created_at}}</div>
                 </div>
                 </li>
                 {% endfor %}
             </ul>
             {% else %}
-            <h1 class="not-found-stamp">게시글이 없습니다.</h1>
+            
             {% endif %}
             
         </section>
@@ -89,24 +101,6 @@
         용눈이오름 : 'https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202307/27/ef114ddd-c10d-4717-95fa-419902728bb5.jpg',
         물영아리 : 'https://file.mk.co.kr/meet/yonhap/2019/07/21/image_readtop_2019_547356_0_161121.jpg',
         따라비오름 : 'https://t1.daumcdn.net/cfile/tistory/997AE8335A06834F03'
-    }
-
-    const ment = {
-        도두봉 : '공항 근처에 있는 오름. 바다와 시내권을 한 눈에 볼 수 있어요. 날아가는 비행기는 덤!',
-        서우봉 : '푸른 바다와 예쁜 유채꽃밭이 어우러진 멋진 풍경이 있는 곳.',
-        수월봉 : '차귀도로 떨어지는 낙조와 지질학의 교과서를 만나볼 수 있어요. 천연기념물 제513호이자 올레12코스에요.',
-        금오름 : '패러글라이딩 풍경을 감상할 수 있는 분화구가 멋진 오름. 환상적인 일몰을 감상할 수 있어요.',
-        새별오름 : '제주 서부 애월에 위치해 있으며 억새가 아름다운 오름',
-        군산 : '황홀한 저녁 노을을 바라보며, 패러글라이딩을 즐길 수 있는 곳. 올레8코스에 있어요.',
-        산굼부리 : '국가지정 문화재 천연기념물 263호로, 사계절마다 다른풍경의 분화구 식물원이에요. ',
-        거문오름 : '대한민국 유일의 세계자연유산!',
-        안돌오름 : '송당에 위치한 오름. 밧돌오름과 죽마고우에요!',
-        아부오름 : '제주의 오름을 좀 더 가깝게 느낄 수 있어요.',
-        백약이오름 : '하늘로 향하는 길. 약초가 많아 백약이 오름이라고 불리었어요.',
-        다랑쉬오름 : '4계절 색채가 뚜렷한 오름의 여왕!',
-        용눈이오름 : '능선의 아름다움을 뽐내는, 김영갑 작가가 사랑한 오름이에요.',
-        물영아리 : '영아리는 신령스런 산이란 뜻이에요. 분화구에 물이 고인 습지를 품고 있어요.',
-        따라비오름 : '3개의 분화구와 6개의 봉우리로 이루어져 있어요. 억새가 참 멋진 오름이에요.',
     }
 
     // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
@@ -228,13 +222,6 @@
             // 스탬프 찍기
             document.getElementById("myHiddenForm").innerHTML = '{% csrf_token %} <input type="hidden" id="oname" name="oname" value="'+place.place_name+'"/>'
             document.getElementById("myHiddenForm").submit();
-            console.log('print!');
-
-            // 정보 넣기
-            console.log(place);
-            document.getElementById('oname').innerHTML = '<strong>'+place.place_name+'</strong>';
-            document.getElementById('ocontent').innerHTML = ment[place.place_name];
-            document.getElementById('obutton').innerHTML = '<button type="button" class="stamp-button"><a href = "'+place.place_url+'" style="text-decoration:none; color:#ffffff;">📍' +place.place_name+' 위치 정보로 이동<a/></button>';
         }
     });
     }

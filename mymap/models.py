@@ -9,3 +9,14 @@ class Stamp(models.Model):
 
     def __str__(self):
         return self.oname
+    
+class Oreum(models.Model):
+    oname = models.CharField(max_length=300)
+    oplace = models.CharField(max_length=300)
+    ocontent = models.CharField(max_length=300, null=True)
+    ourl = models.CharField(max_length=300)
+    oparking = models.CharField(max_length=10, null=True)
+    otoilet = models.CharField(max_length=10, null=True)
+
+    def __str__(self):
+        return self.oname

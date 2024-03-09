@@ -5,6 +5,7 @@ import json
 from django.core.exceptions import ImproperlyConfigured
 from users.models import User
 from .models import Stamp
+from .models import Oreum
 from django.shortcuts import redirect
 
 secret_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'secrets.json')
@@ -32,10 +33,13 @@ def index(request):
         user = User.objects.get(username=request.COOKIES.get('username'))
         user_pk = request.user.pk
         stamps = Stamp.objects.filter(author=user_pk).order_by("-created_at") # 최신 게시물이 먼저오도록 정렬
+        post_stamp = Stamp.objects.filter(author=user_pk).order_by("-created_at").first()
+        oreum = Oreum.objects.get(oname=post_stamp.oname)
         data = {
             'user' : user,
             "MAP_API_KEY" : MAP_API_KEY,
-            "stamps" : stamps # 가져온 게시물들을 posts라는 키로 딕셔너리에 담는다.
+            "stamps" : stamps, # 가져온 게시물들을 posts라는 키로 딕셔너리에 담는다.
+            "oreum_data" : oreum
         }
         return render(request, 'mymap/map.html', data)
 
