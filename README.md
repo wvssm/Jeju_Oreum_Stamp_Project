@@ -3,7 +3,7 @@
 # 올라갈지도
 GPS 기반의 오름 방문 기록 사이트 
 
-https://github.com/wvssm/Jeju_Oreum_Stamp_Project/assets/52875244/26927bb8-4735-4557-bc32-1067d9f21650
+https://github.com/wvssm/Jeju_Oreum_Stamp_Project/assets/52875244/a3adc1a5-7fa9-4526-8488-15735998bfad
 
 </div>
 
