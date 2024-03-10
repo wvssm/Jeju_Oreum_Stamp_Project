@@ -25,7 +25,7 @@ SECRET_KEY = get_secret('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['54.180.157.242',]
+ALLOWED_HOSTS = ['54.180.157.242','localhost:8000','localhost']
 
 
 # Application definition
@@ -115,8 +115,7 @@ AUTH_USER_MODEL = 'users.User' # 내가 생성한 유저로 오버라이딩 할�
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'mymap/static'),
-    os.path.join(BASE_DIR, 'users/static'),
+    os.path.join(BASE_DIR, 'static'),
 ) 
 
 # Default primary key field type
