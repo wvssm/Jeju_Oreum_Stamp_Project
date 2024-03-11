@@ -112,7 +112,7 @@ AUTH_USER_MODEL = 'users.User' # 내가 생성한 유저로 오버라이딩 할�
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
