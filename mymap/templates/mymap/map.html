@@ -240,11 +240,8 @@
         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
         console.log(marker);
         console.log(place.y, place.x)
-        var diff_let = mylet - place.y;
-        var diff_lot = mylet - place.x;
-        console.log(mylet - place.y, mylot - place.x)
-        //if(mylot - place.x > 0.2 || mylot - place.x < -0.2 ){
-        if(place.x<126.5){
+        console.log(mylet, mylot)
+        if(Math.abs(mylet - place.y) > 0.003 || Math.abs(mylot - place.x) >0.02 ){
             alert("현재 위치에서 스탬프를 찍을 수 없습니다.🥲 \n" );
             document.getElementById('oname').innerHTML = '<strong>'+place.place_name+'</strong>';
             document.getElementById('oplace').innerHTML = place.address_name;
