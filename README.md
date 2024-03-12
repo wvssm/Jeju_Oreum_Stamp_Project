@@ -47,6 +47,11 @@ GPS 기능을 통해, 현재 내 주변의 오름을 파악해보세요!
 <!--<img src="https://img.shields.io/badge/postgresql-4169E1?style=for-the-badge&logo=postgresql&logoColor=white">-->
 <br>
 
+# ERD
+<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/static/images/ollagaljdio_ERD.png?raw=true">
+<br>
+<br>
+
 # 버전 정보
 - 올라갈지도 1.0 - update: 2024.03.01
 - 올라갈지도 1.1 - update: 2024.03.11 
