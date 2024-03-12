@@ -50,7 +50,6 @@ GPS 기능을 통해, 현재 내 주변의 오름을 파악해보세요!
 # ERD
 <img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/static/images/ollagaljdio_ERD.png?raw=true">
 <br>
-<br>
 
 # 버전 정보
 - 올라갈지도 1.0 - update: 2024.03.01
@@ -78,12 +77,66 @@ GPS 기능을 통해, 현재 내 주변의 오름을 파악해보세요!
 ### 해결
   - 별도의 static 파일을 생성하여, 해당 파일들을 모아둬야 했다.
   - static 폴더를 분리하는 이유
-    - 정적과 동적 처리를 따로 할 수 있는 웹서버에서 정적 파일을 찾을 때 하나의 경로를 거치는 것이 신속한 응답에 유리하기 때문에, 정적 파일(css,js,images,fonts)들을 모아놓는 것이다.
+    - 정적과 동적 처리를 따로 할 수 있는 웹서버에서, 정적 파일을 찾을 때 하나의 경로를 거치는 것이 신속한 응답에 유리하기 때문에 정적 파일(css,js,images,fonts)들을 모아놓는다.
 
 ### 문제
 - html의 button이 제대로 작동하지 않았다.
 ### 해결
-  - script 부분의 앞부분에서 오류가 발생하여 뒤에 등록한 버튼의 이벤트가 제대로 작동하지 않은 것이었다.
+- script 부분의 앞부분에서 오류가 발생하여 뒤에 등록한 버튼의 이벤트가 제대로 작동하지 않은 것이었다. 
+- 스크립트 앞쪽의 오류를 해결하니, 다시 버튼이 정상적으로 작동하였다.
+
+### 문제
+- Nginx가 css 파일을 인식하지 못했다.
+### 해결
+- Django에서 설정한 정적 파일을 찾는 디렉토리의 경로와 Nginx에서 맵핑한 url 경로가 일치하지 않아서 발생한 문제였다. 
+- 정적 파일을 찾는 디렉토리 목록 수정
+  ```python
+  STATICFILES_DIRS = (
+      os.path.join(BASE_DIR, 'static'),
+  ) 
+  ```
+- Nginx에서의 url 맵핑 수정
+  ```
+  location /static {
+        alias /home/ubuntu/app/Jeju_Oreum_Stamp_Project/staticfiles;
+  }
+  ```
+- 위와 같이 코드를 수정하니 css가 웹페이지에 적용되었다.
+  
+### 문제
+- Certbot으로 HTTPS 인증서를 발급 받는 과정에서 Certbot이 설치되지 않았다.
+  ```bash
+  # 입력한 명령어
+  sudo snap install --classic certbot
+  ```
+  ```bash
+  # 발생 오류
+  error: cannot perform the following tasks:
+  - Run hook prepare-plug-plugin of snap "certbot":
+  -----
+  Only connect this interface if you trust the plugin author to have root on the system.
+  Run `snap set certbot trust-plugin-with-root=ok` to acknowledge this and then run this to perform the connection.
+  If that doesn't work, you may need to remove all certbot-dns-* plugins from the system, -----)
+  ```
+### 해결
+- ***snap list***라는 명령어를 실행해본 결과, 이전에 certbot을 통한 인증서 발급을 위해 certbot-dns-route53을 설치해놓은 상태였다. 그래서 certbot이 설치되지 않은 것이었다.
+- ***sudo snap remove certbot-dns-route53***명령어를 통해 해당 snap을 지워주고 설치 명령어를 수행하니 정상적으로 수행되었다.
+
+### 문제
+- certbot을 통해 정상적으로 ssl인증서를 발급 받았다. 하지만 https:// 주소로 접속하니 웹페이지가 뜨지 않았다.
+### 해결
+- 배포를 수행한 AWS Lightsail의 방화벽에 의해서 주소가 접속되지 않은 것이었다.
+- HTTPS는 443번 포트에서 돌아가기 때문에, AWS Lightsail의 네트워킹 탭에서 443 포트를 뚫어주는 방화벽 규칙을 추가했다.
+- 위의 과정을 수행하니 정상적으로 웹페이지에 접속이 가능했다.
+
+### 문제
+- CSRF 토큰을 사용하는 form 태그의 post 요청 시 접근하고 있는 호스트가 신뢰할 수 있는 origins 목록에 없다는 메시지와 함께 403 Forbidden 에러가 발생했다.
+### 해결
+- Django 서버는 POST request가 들어왔을 때 method를 요청하는 호스트의 헤더 Referer 속성을 확인하여 허가되지 않는 호스트의 경우 403 forbidden을 발생시킨다.
+- CRSF_TRUSTED_ORIGINS의 값으로 정상적인 접근 도메인 값을 명시하면, 해당 도메인으로 접속했을 때 403 forbidden을 피할 수 있다.
+  ```python
+  CSRF_TRUSTED_ORIGINS = ["http://도메인_주소", "https://도메인_주소"]
+  ```
 <br><br>
 
 # 느낀점 및 개선하고 싶은 점
