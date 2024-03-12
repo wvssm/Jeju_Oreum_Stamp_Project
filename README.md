@@ -28,7 +28,7 @@ GPS 기능을 통해, 현재 내 주변의 오름을 파악해보세요!
 방문한 오름과 날짜를 한 눈에 확인해보세요.
 
 ### **방문 기록을 편하게❗️ 나의 추억을 영원하게❗️ 올라갈지도🌋가 도와드릴게요.**
-<br><br>
+<br>
 
 # 프로젝트 기능
 ### ✍️GPS 기반의 오름 방문 기록
@@ -50,7 +50,6 @@ GPS 기능을 통해, 현재 내 주변의 오름을 파악해보세요!
 # ERD
 <img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/static/images/ollagaljdio_ERD.png?raw=true">
 <br>
-<br>
 
 # 버전 정보
 - 올라갈지도 1.0 - update: 2024.03.01
@@ -64,7 +63,7 @@ GPS 기능을 통해, 현재 내 주변의 오름을 파악해보세요!
 |<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/static/images/profile-img-kang.jpg?raw=true"  width="200" height="200"/>|<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/static/images/profile-img-jung.jpg?raw=true"  width="200" height="200"/>|<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/static/images/profile-img-sim.jpg?raw=true"  width="200" height="200"/>|<img src="https://github.com/wvssm/Jeju_Oreum_Stamp_Project/blob/main/static/images/profile-img-lee.jpg?raw=true"  width="200" height="200"/>|
 |Backend|기획, Frontend|Frontend|기획, PPT|
 |비를 뚫고온 구세주☔|오름 정복중인 오름 러버😍|재주많은 덕후🤓|분위기메이커(저세상 텐션)🥳|
-
+<br>
 
 # 트러블 슈팅
 ### 문제
