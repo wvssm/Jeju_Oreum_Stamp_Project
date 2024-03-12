@@ -3,13 +3,9 @@
 # 올라갈지도
 GPS 기반의 오름 방문 기록 사이트 
 <br>
+🌋 현재 배포중: https://ollagaljido.net/auth/login
 <br>
-🌋 데모버전 배포중: http://ollagaljido.net/auth/login 
 <br>
-<br>
-🚨 Issue: http를 https로 전환하지 않아 위치 정보 사용이 불가합니다. 
-<br>빠른 시일 내에 전환하겠습니다.
-
 
 https://github.com/wvssm/Jeju_Oreum_Stamp_Project/assets/52875244/c794feac-e98f-498d-8b05-782f4351563d
 
