@@ -121,6 +121,7 @@ GPS 기능을 통해, 현재 내 주변의 오름을 파악해보세요!
 ### 해결
 - ***snap list***라는 명령어를 실행해본 결과, 이전에 certbot을 통한 인증서 발급을 위해 certbot-dns-route53을 설치해놓은 상태였다. 그래서 certbot이 설치되지 않은 것이었다.
 - ***sudo snap remove certbot-dns-route53***명령어를 통해 해당 snap을 지워주고 설치 명령어를 수행하니 정상적으로 수행되었다.
+- [공식문서 참고](https://certbot.eff.org/instructions?ws=nginx&os=ubuntufocal)
 
 ### 문제
 - certbot을 통해 정상적으로 ssl인증서를 발급 받았다. 하지만 https:// 주소로 접속하니 웹페이지가 뜨지 않았다.
@@ -137,6 +138,7 @@ GPS 기능을 통해, 현재 내 주변의 오름을 파악해보세요!
   ```python
   CSRF_TRUSTED_ORIGINS = ["http://도메인_주소", "https://도메인_주소"]
   ```
+- [공식문서 참고](https://docs.djangoproject.com/en/4.0/ref/settings/#csrf-trusted-origins)
 <br><br>
 
 # 느낀점 및 개선하고 싶은 점
