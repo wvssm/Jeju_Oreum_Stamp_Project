@@ -3,7 +3,7 @@
 # 올라갈지도
 GPS 기반의 오름 방문 기록 사이트 
 <br>
-🌋 현재 배포중: https://ollagaljido.net/auth/login
+🌋 배포 중단: ~~https://ollagaljido.net/auth/login~~
 <br>
 <br>
 
